@@ -68,13 +68,7 @@ if (!chrome.cast || !chrome.cast.isAvailable) {
  * initialization
  */
 function initializeCastApi() {
-  // default app ID to the default media receiver app
-  // optional: you may change it to your own app ID/receiver
-  var applicationIDs = [
-      'BE6E4473', // hosted reference app
-      chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID
-    ];
-
+  var applicationID = '55993ADD'; // Home Dashboard (Justin Mayfield)
 
   // auto join policy can be one of the following three
   // 1) no auto join
@@ -87,11 +81,12 @@ function initializeCastApi() {
     ];
 
   // request session
-  var sessionRequest = new chrome.cast.SessionRequest(applicationIDs[0]);
+  var sessionRequest = new chrome.cast.SessionRequest(applicationID);
   var apiConfig = new chrome.cast.ApiConfig(sessionRequest,
     sessionListener,
     receiverListener,
-    autoJoinPolicyArray[1]);
+    chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
+    );
 
   chrome.cast.initialize(apiConfig, onInitSuccess, onError);
 }
